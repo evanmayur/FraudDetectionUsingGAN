@@ -1,6 +1,9 @@
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowUpRight, ArrowDownLeft, Wallet, TrendingUp, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, ArrowDownLeft, Wallet, TrendingUp, ShieldCheck, Loader2 } from 'lucide-react';
 import { LineChart, Line, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
+import { collection, query, orderBy, limit, getDocs } from "firebase/firestore";
+import { db } from "../components/logic/firebase";
 
 const data = [
     { name: 'Mon', value: 400 },
@@ -13,6 +16,33 @@ const data = [
 ];
 
 const Dashboard = () => {
+    const [transactions, setTransactions] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchTransactions = async () => {
+            try {
+                const q = query(
+                    collection(db, "transactions"),
+                    orderBy("createdAt", "desc"),
+                    limit(5)
+                );
+                const querySnapshot = await getDocs(q);
+                const txData = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setTransactions(txData);
+            } catch (error) {
+                console.error("Error fetching transactions:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTransactions();
+    }, []);
+
     return (
         <div className="space-y-8">
             <div className="flex items-center justify-between">
@@ -28,7 +58,7 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Card className="bg-gradient-to-br from-blue-600 to-blue-800 border-none">
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
                         <CardTitle className="text-sm font-medium text-blue-100">Total Balance</CardTitle>
@@ -48,17 +78,6 @@ const Dashboard = () => {
                     <CardContent>
                         <div className="text-3xl font-bold text-white">₹12,234.00</div>
                         <p className="text-xs text-gray-400 mt-1">+4% from last month</p>
-                    </CardContent>
-                </Card>
-
-                <Card>
-                    <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-sm font-medium text-gray-400">Savings</CardTitle>
-                        <TrendingUp className="w-4 h-4 text-green-400" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="text-3xl font-bold text-white">₹8,500.00</div>
-                        <p className="text-xs text-gray-400 mt-1">+12% from last month</p>
                     </CardContent>
                 </Card>
             </div>
@@ -89,20 +108,35 @@ const Dashboard = () => {
                         <CardTitle>Recent Transactions</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        {[1, 2, 3, 4].map((i) => (
-                            <div key={i} className="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors">
-                                <div className="flex items-center space-x-3">
-                                    <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-                                        <ArrowDownLeft className="w-5 h-5 text-blue-400" />
+                        {loading ? (
+                            <div className="flex justify-center py-8">
+                                <Loader2 className="w-6 h-6 text-blue-500 animate-spin" />
+                            </div>
+                        ) : transactions.length === 0 ? (
+                            <p className="text-center text-gray-500 py-4">No recent transactions</p>
+                        ) : (
+                            transactions.map((tx) => (
+                                <div key={tx.id} className="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors">
+                                    <div className="flex items-center space-x-3">
+                                        <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+                                            <ArrowDownLeft className="w-5 h-5 text-blue-400" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-medium text-white">{tx.recipientUPI}</p>
+                                            <p className="text-xs text-gray-400">
+                                                {tx.createdAt?.seconds ? new Date(tx.createdAt.seconds * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Just now'}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p className="text-sm font-medium text-white">Netflix Subscription</p>
-                                        <p className="text-xs text-gray-400">Today, 12:42 PM</p>
+                                    <div className="text-right">
+                                        <span className="text-sm font-medium text-white block">-₹{tx.amount}</span>
+                                        <span className={`text-[10px] ${tx.fraudCheck === 'Passed' ? 'text-green-400' : 'text-red-400'}`}>
+                                            {tx.fraudCheck === 'Passed' ? 'Verified' : 'Flagged'}
+                                        </span>
                                     </div>
                                 </div>
-                                <span className="text-sm font-medium text-white">-₹499.00</span>
-                            </div>
-                        ))}
+                            ))
+                        )}
                     </CardContent>
                 </Card>
             </div>
