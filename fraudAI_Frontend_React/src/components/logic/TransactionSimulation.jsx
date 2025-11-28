@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CheckCircle, XCircle, Loader2, ArrowRight, X } from 'lucide-react'
 import { Button } from "@/components/ui/button"
@@ -8,13 +9,47 @@ const TransactionSimulation = ({ upiId, amount, remarks, senderUPI, onClose }) =
   const [currentStep, setCurrentStep] = useState('details')
   const [isLoading, setIsLoading] = useState(false)
 
+  // Sample features for demonstration
+  // Safe transaction features (Label 0)
+  const SAFE_FEATURES = [
+    0.007772198, 0.4615384615, 0.0, 0.0, 0.0, 0.1190841842, 0.7942634013, 0.1721738243,
+    0.786936131, 0.0, 0.0, 0.0, 0.4140030852, 0.1869060353, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0
+  ];
+
+  // Fraud transaction features (Label 1)
+  const FRAUD_FEATURES = [
+    0.0079769523, 0.0, 1.0, 0.0, 1.0, 0.1892930732, 0.2897591761, 0.8752220188,
+    0.0329058891, 0.0, 0.0, 0.0, 0.5557675537, 0.15793259, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0
+  ];
+
   const handleConfirm = async () => {
     setIsLoading(true);
     setCurrentStep("processing");
     try {
+      // 1. Select features based on amount (Demo Logic)
+      // If amount >= 10000, simulate fraud features
+      const features = Number(amount) >= 10000 ? FRAUD_FEATURES : SAFE_FEATURES;
+
+      // 2. Call Fraud Detection API
+      console.log("Checking for fraud...");
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/predict`, {
+        features: features
+      });
+
+      const isFraud = response.data.prediction[0] === 1;
+      console.log("Fraud Check Result:", isFraud ? "FRAUD DETECTED" : "SAFE");
+
+      if (isFraud) {
+        // Block transaction
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Small delay for UX
+        setCurrentStep("error");
+        return; // Stop execution
+      }
+
+      // 3. If Safe, Proceed with Transaction
       // Simulate transaction delay
-      await new Promise(resolve => setTimeout(resolve, 3000));
-  
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
       // Save to Firebase
       await addDoc(collection(db, "transactions"), {
         amount: Number(amount),
@@ -22,8 +57,10 @@ const TransactionSimulation = ({ upiId, amount, remarks, senderUPI, onClose }) =
         senderUPI: senderUPI,
         remarks: remarks,
         createdAt: serverTimestamp(),
+        status: "Completed", // Explicit status
+        fraudCheck: "Passed"
       });
-  
+
       setCurrentStep("success");
     } catch (error) {
       console.error("Error processing transaction:", error);
@@ -35,16 +72,16 @@ const TransactionSimulation = ({ upiId, amount, remarks, senderUPI, onClose }) =
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
-      transition: { 
+      transition: {
         when: "beforeChildren",
         staggerChildren: 0.1
       }
     },
-    exit: { 
+    exit: {
       opacity: 0,
-      transition: { 
+      transition: {
         when: "afterChildren",
         staggerChildren: 0.05,
         staggerDirection: -1
@@ -54,19 +91,19 @@ const TransactionSimulation = ({ upiId, amount, remarks, senderUPI, onClose }) =
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
-    visible: { 
-      y: 0, 
+    visible: {
+      y: 0,
       opacity: 1,
-      transition: { 
+      transition: {
         type: 'spring',
         damping: 15,
         stiffness: 300
       }
     },
-    exit: { 
-      y: -20, 
+    exit: {
+      y: -20,
       opacity: 0,
-      transition: { 
+      transition: {
         type: 'spring',
         damping: 15,
         stiffness: 300
@@ -75,7 +112,7 @@ const TransactionSimulation = ({ upiId, amount, remarks, senderUPI, onClose }) =
   }
 
   const DetailItem = ({ label, value }) => (
-    <motion.div 
+    <motion.div
       className="flex items-center justify-between space-x-4 bg-gray-800 bg-opacity-50 p-4 rounded-2xl backdrop-blur-sm"
       variants={itemVariants}
     >
@@ -105,7 +142,7 @@ const TransactionSimulation = ({ upiId, amount, remarks, senderUPI, onClose }) =
         )
       case 'processing':
         return (
-          <motion.div 
+          <motion.div
             className="flex flex-col items-center justify-center h-full"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -119,13 +156,13 @@ const TransactionSimulation = ({ upiId, amount, remarks, senderUPI, onClose }) =
         )
       case 'success':
         return (
-          <motion.div 
+          <motion.div
             className="flex flex-col items-center justify-center h-full"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: 'spring', damping: 15, stiffness: 300 }}
           >
-            <motion.div 
+            <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', damping: 10, stiffness: 100, delay: 0.2 }}
@@ -145,13 +182,13 @@ const TransactionSimulation = ({ upiId, amount, remarks, senderUPI, onClose }) =
         )
       case 'error':
         return (
-          <motion.div 
+          <motion.div
             className="flex flex-col items-center justify-center h-full"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: 'spring', damping: 15, stiffness: 300 }}
           >
-            <motion.div 
+            <motion.div
               initial={{ rotate: -90, opacity: 0 }}
               animate={{ rotate: 0, opacity: 1 }}
               transition={{ type: 'spring', damping: 10, stiffness: 100, delay: 0.2 }}

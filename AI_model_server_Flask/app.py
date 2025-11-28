@@ -23,8 +23,16 @@ def predict():
         return jsonify({"error": "No input data provided"}), 400
 
     try:
+        # Validate input
+        features_list = data.get('features')
+        if not features_list or not isinstance(features_list, list):
+             return jsonify({"error": "Invalid input: 'features' must be a list"}), 400
+        
+        if len(features_list) != 22:
+             return jsonify({"error": f"Invalid input: Expected 22 features, got {len(features_list)}"}), 400
+
         # Extract features from the request
-        features = np.array(data['features']).reshape(1, -1)
+        features = np.array(features_list).reshape(1, -1)
         # Make a prediction
         prediction = model.predict(features)
         return jsonify({"prediction": prediction.tolist()})
