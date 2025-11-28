@@ -16,7 +16,8 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import SidebarContent from './SidebarContent';
 
 
-const Header = ({ user, onSignIn }) => {
+// eslint-disable-next-line react/prop-types
+const Header = ({ user }) => {
     return (
         <header className="sticky top-0 z-10 backdrop-blur-xl bg-black/20 border-b border-white/10">
               <div className="flex items-center justify-between px-6 py-4">

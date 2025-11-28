@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import SidebarContent from './SidebarContent';
 import { auth, db } from "./firebase.js";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, setDoc, serverTimestamp, collection, query, where, getDocs } from "firebase/firestore";
 import { cn } from "@/lib/utils";
 import TransactionSimulation from '../logic/TransactionSimulation'
@@ -5164,75 +5164,76 @@ import {
       
 
     const handleGoogleSignIn = async () => {
+        if (!auth) {
+            console.error("Firebase auth not initialized");
+            return;
+        }
+
         const provider = new GoogleAuthProvider();
         try {
-        const result = await signInWithPopup(auth, provider);
-        const loggedInUser = result.user;
+            console.log("Starting Google Sign-In...");
+            const result = await signInWithPopup(auth, provider);
+            const loggedInUser = result.user;
+            console.log("Google Sign-In successful:", loggedInUser.email);
 
-        if (loggedInUser) {
-            setUser(loggedInUser);
+            // The onAuthStateChanged listener will handle setting the user state
+            // We just need to create/update the user document in Firestore
             const userRef = doc(db, "users", loggedInUser.uid);
             const userDoc = await getDoc(userRef);
 
             if (!userDoc.exists()) {
-            const generatedUPIId = generateUPIId(loggedInUser.displayName || "user");
-            const { user_friendly, model_processed } = getRandomTransaction();
-            await setDoc(userRef, {
-                uid: loggedInUser.uid,
-                name: loggedInUser.displayName,
-                email: loggedInUser.email,
-                photoURL: loggedInUser.photoURL,
-                upiId: generatedUPIId,
-                createdAt: serverTimestamp(),
-                transactionDetails: user_friendly, // Save user-friendly transaction details
-                modelData: model_processed
-            });
-            setUpiId(generatedUPIId);
+                console.log("Creating new user document...");
+                const generatedUPIId = generateUPIId(loggedInUser.displayName || "user");
+                const { user_friendly, model_processed } = getRandomTransaction();
+                
+                await setDoc(userRef, {
+                    uid: loggedInUser.uid,
+                    name: loggedInUser.displayName,
+                    email: loggedInUser.email,
+                    photoURL: loggedInUser.photoURL,
+                    upiId: generatedUPIId,
+                    createdAt: serverTimestamp(),
+                    transactionDetails: user_friendly,
+                    modelData: model_processed
+                });
+                
+                console.log("User document created successfully");
             } else {
-            setUpiId(userDoc.data().upiId);
+                console.log("User document already exists");
             }
-        }
         } catch (error) {
-        console.error("Google Sign-In Error:", error);
+            console.error("Google Sign-In Error:", error);
         }
     };
 
 
 
     useEffect(() => {
-        const checkUser = async () => {
-        const currentUser = auth.currentUser;
-        if (currentUser) {
-            setUser(currentUser);
-            const userRef = doc(db, "users", currentUser.uid);
-            const userDoc = await getDoc(userRef);
-            if (userDoc.exists()) {
-            setUpiId(userDoc.data().upiId);
-            }
-        }
-        };
-        checkUser();
-    }, []);
-
-    useEffect(() => {
-        const checkUser = async () => {
-            const currentUser = auth.currentUser; // Get the current user
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (currentUser) {
-                setUser(currentUser); // Set user state
-                const userRef = doc(db, "users", currentUser.uid); // Reference to the user's document
-                const userDoc = await getDoc(userRef); // Fetch the user document
+                console.log("User is signed in:", currentUser.email);
+                setUser(currentUser);
+                
+                // Get user data from Firestore
+                const userRef = doc(db, "users", currentUser.uid);
+                const userDoc = await getDoc(userRef);
+                
                 if (userDoc.exists()) {
-                    const userData = userDoc.data(); // Get the user data
-                    // Assuming userData.upiId is the UPI ID of the logged-in user
-                    setUser((prev) => ({ ...prev, upiId: userData.upiId })); // Set UPI ID in user state
+                    const userData = userDoc.data();
+                    setUpiId(userData.upiId || "");
+                    setUser(prev => ({ ...prev, upiId: userData.upiId }));
                 } else {
-                    console.error("User document does not exist");
+                    console.log("User document does not exist, will be created on first sign-in");
                 }
             } else {
-                console.log("No user is currently logged in");
+                console.log("User is signed out");
+                setUser(null);
+                setUpiId("");
             }
-        };
-        checkUser();
+        });
+
+        // Cleanup subscription on unmount
+        return () => unsubscribe();
     }, []);
 
     return (

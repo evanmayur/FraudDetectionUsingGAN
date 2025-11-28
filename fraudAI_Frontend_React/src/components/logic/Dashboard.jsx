@@ -114,7 +114,7 @@ const Dashboard = () => {
           fill="#8884d8"
           dataKey="value"
         >
-          {spendingData.map((entry, index) => (
+          {spendingData.map((_, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
@@ -131,7 +131,7 @@ const Dashboard = () => {
           }}
         />
         <Legend 
-          formatter={(value, entry, index) => <span className="text-gray-400">{value}</span>}
+          formatter={(value) => <span className="text-gray-400">{value}</span>}
         />
       </PieChart>
     </ResponsiveContainer>
