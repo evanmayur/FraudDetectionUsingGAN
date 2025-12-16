@@ -1,0 +1,106 @@
+upi_id,display_name,verification_status,blacklist_status,past_fraud_flags,fraud_complaints_count,account_age_months,social_trust_score,geo_location_flag,merchant_category_mismatch,risk_category
+komal60@upi,Komal60,suspicious,0,1,5,6,3.1756291226260913,unusual,0,high
+akash45@okaxis,Akash45,suspicious,0,1,2,2,38.87666736292614,unusual,1,high
+gaurav.patel@oksbi,Gaurav Patel,verified,0,0,1,14,44.2380762723827,normal,1,medium
+anjali.gupta3@okicici,Anjali Gupta3,verified,0,0,0,34,95.56433568214518,normal,0,safe
+divya.nair@okaxis,Divya Nair,recently_registered,0,1,0,6,41.09445955962899,unusual,0,medium
+varun20@upi,Varun20,verified,0,0,2,5,62.14275956276044,normal,0,medium
+kavya.dubey@phonepe,Kavya Dubey,recently_registered,0,0,0,16,55.763443960275225,unusual,0,medium
+ananya.rao@paytm,Ananya Rao,verified,0,1,2,11,48.78926355421506,unusual,0,medium
+mohit.nair@gpay,Mohit Nair,recently_registered,0,0,1,7,47.689871195090205,normal,1,medium
+ishamehta@ybl,Ishamehta,verified,0,0,0,58,62.98350253009492,normal,0,safe
+harshrao@phonepe,Harshrao,verified,0,0,0,12,72.95018098522782,normal,0,safe
+anjali.mehta7@okaxis,Anjali Mehta7,verified,0,0,0,28,99.61018902644501,normal,0,safe
+gaurav.mehta5@paytm,Gaurav Mehta5,verified,0,0,0,35,79.78963547524388,normal,0,safe
+isha.nair2@okaxis,Isha Nair2,verified,0,0,0,21,89.14812620046852,normal,0,safe
+akash91@phonepe,Akash91,verified,0,1,1,20,64.98888244088008,unusual,0,medium
+karan.agarwal@okaxis,Karan Agarwal,verified,0,0,0,52,89.53003617956858,normal,0,safe
+karan.gupta4@okicici,Karan Gupta4,verified,0,1,0,5,34.89353940497944,normal,0,medium
+sneha81@okicici,Sneha81,suspicious,0,1,3,6,11.414135254446162,high-risk,1,high
+akash.mishra6@okaxis,Akash Mishra6,verified,0,0,0,59,90.85394445016976,normal,0,safe
+aditya.sharma@upi,Aditya Sharma,recently_registered,0,1,2,0,27.339099324154045,unusual,0,high
+rohanjain@phonepe,Rohanjain,suspicious,1,1,3,4,31.903676476276935,high-risk,0,high
+priya30@oksbi,Priya30,verified,0,0,0,53,86.00493497529932,normal,0,safe
+snehadubey@okaxis,Snehadubey,recently_registered,0,0,2,5,45.63178239980553,normal,1,medium
+adityamishra@okicici,Adityamishra,recently_registered,1,1,5,5,2.120427942343266,unusual,0,high
+meeraagarwal@gpay,Meeraagarwal,verified,0,0,0,34,71.78600765932372,normal,0,safe
+divyareddy@ybl,Divyareddy,suspicious,0,1,5,5,4.866377215420092,high-risk,0,high
+arjun.jain9@phonepe,Arjun Jain9,verified,0,0,0,53,62.28820658195443,normal,0,safe
+adityajain@gpay,Adityajain,verified,0,1,2,5,39.16096261518142,unusual,1,medium
+divya.rao2@okaxis,Divya Rao2,suspicious,0,1,3,3,38.267204712871944,high-risk,0,high
+isha.dubey@oksbi,Isha Dubey,verified,0,0,0,53,83.84345629107244,normal,0,safe
+gaurav.agarwal6@ybl,Gaurav Agarwal6,recently_registered,0,1,5,2,37.303971703660075,unusual,0,high
+nikhil79@okicici,Nikhil79,verified,0,0,0,54,82.0085929962533,normal,0,safe
+ananya.dubey7@oksbi,Ananya Dubey7,verified,0,0,0,18,66.66093741343427,normal,0,safe
+aditya.patel@gpay,Aditya Patel,verified,0,0,0,13,62.27339192345837,normal,0,safe
+nikhilsingh@paytm,Nikhilsingh,verified,0,0,0,35,73.19833339999882,normal,0,safe
+amit.agarwal@gpay,Amit Agarwal,recently_registered,0,0,2,5,43.60404322772234,unusual,0,medium
+nisha.sharma8@gpay,Nisha Sharma8,recently_registered,1,1,2,1,36.67187226312692,high-risk,0,high
+meerajain@phonepe,Meerajain,verified,0,0,0,43,97.27584857830979,normal,0,safe
+vikram80@paytm,Vikram80,verified,0,0,0,40,88.63890257032938,normal,0,safe
+isha34@gpay,Isha34,verified,0,0,0,40,79.36593454939134,normal,0,safe
+mohitagarwal@okicici,Mohitagarwal,verified,0,0,2,4,65.36818051277439,normal,1,medium
+deepakjain@paytm,Deepakjain,recently_registered,0,1,3,3,30.69827438934757,high-risk,1,high
+ananyaagarwal@okaxis,Ananyaagarwal,verified,0,0,0,42,92.96485062549127,normal,0,safe
+rahul10@ybl,Rahul10,verified,0,0,0,13,82.57398515559075,normal,0,safe
+isha.dubey8@gpay,Isha Dubey8,verified,0,0,0,52,94.76306131678463,normal,0,safe
+pooja.sharma@ybl,Pooja Sharma,suspicious,0,1,3,2,24.740448190560215,high-risk,0,high
+raj.mishra4@okicici,Raj Mishra4,suspicious,0,1,5,4,24.863601455456322,high-risk,1,high
+ananyaiyer@upi,Ananyaiyer,recently_registered,0,1,2,6,59.230766277629925,unusual,1,medium
+kritika.mehta@phonepe,Kritika Mehta,recently_registered,0,0,0,6,38.13427661759143,unusual,1,medium
+karan.reddy@phonepe,Karan Reddy,verified,0,0,0,44,87.62907232991039,normal,0,safe
+karan.nair@gpay,Karan Nair,verified,0,0,1,24,60.79598691426659,unusual,1,medium
+rohan.reddy6@ybl,Rohan Reddy6,suspicious,1,1,5,1,24.85377373697741,high-risk,0,high
+deepak.rao1@okaxis,Deepak Rao1,verified,0,1,0,10,43.90090573323053,unusual,1,medium
+komal32@oksbi,Komal32,verified,0,0,0,29,97.18524627343926,normal,0,safe
+swati27@upi,Swati27,recently_registered,0,1,2,6,11.487345457316946,unusual,1,high
+poojakumar@ybl,Poojakumar,verified,0,0,0,17,65.67031870523583,normal,0,safe
+kritika90@okicici,Kritika90,verified,0,0,0,17,69.77067892948348,normal,0,safe
+neha.choudhary@upi,Neha Choudhary,verified,0,0,0,43,77.88203250937835,normal,0,safe
+divya40@ybl,Divya40,verified,0,0,0,33,92.38755375238762,normal,0,safe
+mohit41@okicici,Mohit41,verified,0,0,0,48,63.29150629535535,normal,0,safe
+deepak.jain@upi,Deepak Jain,recently_registered,0,1,3,0,24.42562210184608,unusual,0,high
+swati.mishra8@okicici,Swati Mishra8,suspicious,0,1,4,1,2.3789319416544563,unusual,1,high
+swati45@oksbi,Swati45,verified,0,1,1,10,38.03165263714382,normal,0,medium
+ananyachoudhary@ybl,Ananyachoudhary,recently_registered,1,1,4,2,0.889008643449829,high-risk,0,high
+simrankumar@gpay,Simrankumar,recently_registered,0,1,3,1,10.615760811563288,high-risk,1,high
+arjunkumar@oksbi,Arjunkumar,verified,0,0,0,59,75.99100183277446,normal,0,safe
+mohit.nair6@phonepe,Mohit Nair6,verified,0,1,0,17,39.454360513040314,unusual,1,medium
+arjun.verma@okaxis,Arjun Verma,verified,0,0,0,21,92.39548221585508,normal,0,safe
+mohit36@ybl,Mohit36,verified,0,0,0,21,67.54772444032682,normal,0,safe
+vikram.agarwal7@okaxis,Vikram Agarwal7,verified,0,0,0,19,61.84288929640865,normal,0,safe
+simran.mehta4@oksbi,Simran Mehta4,verified,0,0,0,45,90.75602118793103,normal,0,safe
+rahul.rao@paytm,Rahul Rao,recently_registered,0,0,1,9,43.51885402809009,unusual,1,medium
+riyapatel@paytm,Riyapatel,verified,0,0,0,17,89.00429784858986,normal,0,safe
+anjali.sharma3@phonepe,Anjali Sharma3,suspicious,0,1,2,0,39.72015928202357,high-risk,1,high
+swatimishra@oksbi,Swatimishra,verified,0,1,2,18,40.554867285515414,normal,0,medium
+neha82@upi,Neha82,verified,0,0,0,32,90.2982128349443,normal,0,safe
+nishareddy@okaxis,Nishareddy,verified,0,0,0,27,99.89642315730347,normal,0,safe
+karan67@okaxis,Karan67,verified,0,0,0,45,99.45301831533419,normal,0,safe
+arjunrao@oksbi,Arjunrao,verified,0,0,0,58,86.12797447966187,normal,0,safe
+deepak.nair@okaxis,Deepak Nair,recently_registered,0,1,0,9,56.47392697578874,normal,0,medium
+rohansharma@paytm,Rohansharma,suspicious,1,1,5,5,39.20211794794956,unusual,0,high
+vikramdubey@paytm,Vikramdubey,verified,0,0,0,55,66.51788353715847,normal,0,safe
+kritikarao@phonepe,Kritikarao,verified,0,0,0,58,98.81680897581154,normal,0,safe
+raj.choudhary@paytm,Raj Choudhary,verified,0,1,1,22,46.900373055722575,unusual,0,medium
+arjun52@okicici,Arjun52,verified,0,0,0,60,92.08313783346026,normal,0,safe
+pooja.patel7@paytm,Pooja Patel7,recently_registered,0,1,5,3,12.014062637326862,high-risk,1,high
+kritikagupta@gpay,Kritikagupta,verified,0,0,0,51,88.63848078856819,normal,0,safe
+meeraagarwal@ybl,Meeraagarwal,verified,0,0,0,26,87.66808785243896,normal,0,safe
+arjun19@paytm,Arjun19,recently_registered,0,1,1,10,59.15240204337895,normal,0,medium
+sneha.mehta@gpay,Sneha Mehta,verified,0,0,0,39,65.34476562257097,normal,0,safe
+raj.patel@ybl,Raj Patel,recently_registered,1,1,3,6,12.209281386667609,unusual,1,high
+nikhil.gupta2@oksbi,Nikhil Gupta2,recently_registered,0,1,2,10,40.81729640649482,normal,1,medium
+arjunnair@gpay,Arjunnair,verified,0,1,1,16,60.45926370966096,normal,0,medium
+gaurav99@gpay,Gaurav99,recently_registered,0,0,0,18,42.09363137475821,unusual,1,medium
+karan.singh@oksbi,Karan Singh,suspicious,0,1,2,1,1.7752573177957665,high-risk,1,high
+mohit.mishra8@okaxis,Mohit Mishra8,recently_registered,0,0,1,15,45.995611352223456,normal,1,medium
+gauravnair@ybl,Gauravnair,verified,0,0,2,19,44.32358488275163,normal,0,medium
+rajjain@paytm,Rajjain,recently_registered,0,1,5,0,4.97875049329044,unusual,1,high
+snehareddy@phonepe,Snehareddy,recently_registered,0,1,2,15,30.40617672343449,normal,0,medium
+deepak.choudhary2@okicici,Deepak Choudhary2,verified,0,1,1,19,50.424244595526545,normal,1,medium
+demo.user@upi,Demo User,verified,0,0,0,24,90.0,normal,0,safe
+trusted.merchant@upi,Trusted Merchant,verified,0,0,0,48,95.0,normal,0,safe
+suspicious.account@upi,Suspicious Account,suspicious,1,1,5,1,5.0,high-risk,1,high
+new.user@upi,New User,recently_registered,0,0,0,1,50.0,normal,0,medium
+fraud.actor@upi,Fraud Actor,suspicious,1,1,5,0,2.0,high-risk,1,high

@@ -1,23 +1,38 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 import Layout from './components/layout/Layout';
 import Dashboard from './pages/Dashboard';
 import SendMoney from './pages/SendMoney';
+import SendTransaction from './pages/SendTransaction';
+import TransactionHistory from './pages/TransactionHistory';
+import AdminDashboard from './pages/AdminDashboard';
+import LiveDemo from './pages/LiveDemo';
 
 const App = () => {
   return (
-    <Router>
-      <Layout>
+    <AuthProvider>
+      <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/send-money" element={<SendMoney />} />
-          {/* Placeholders for other routes */}
-          <Route path="/transactions" element={<Dashboard />} />
-          <Route path="/settings" element={<Dashboard />} />
+          {/* Live Demo - Exhibition Mode (no layout wrapper) */}
+          <Route path="/demo" element={<LiveDemo />} />
+          {/* Production Send Money with real API */}
+          <Route path="/send" element={<SendTransaction />} />
+          {/* Transaction History */}
+          <Route path="/transactions" element={<TransactionHistory />} />
+          {/* Admin Dashboard */}
+          <Route path="/admin" element={<Layout><AdminDashboard /></Layout>} />
+          {/* Regular app routes with layout */}
+          <Route path="/dashboard" element={<Layout><Dashboard /></Layout>} />
+          <Route path="/send-money" element={<Layout><SendMoney /></Layout>} />
+          <Route path="/settings" element={<Layout><Dashboard /></Layout>} />
         </Routes>
-      </Layout>
-    </Router>
+      </Router>
+    </AuthProvider>
   );
 };
 
 export default App;
+
+
+

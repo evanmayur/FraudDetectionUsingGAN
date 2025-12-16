@@ -1,43 +1,12 @@
-from flask import Flask, request, jsonify
-import pickle
-import numpy as np
-from flask_cors import CORS
+"""
+SafePay AI Backend - Main Entry Point
+Runs the Flask application using the create_app factory.
+"""
 
-app = Flask(__name__)
-CORS(app) 
+from app import create_app, socketio
 
-# Load the saved model
-model_path = "best_rf_model (1).pkl"
-with open(model_path, "rb") as file:
-    model = pickle.load(file)
-
-@app.route('/')
-def home():
-    return "Welcome to the Random Forest Prediction API!"
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    # Get JSON data from the request
-    data = request.get_json()
-    if not data:
-        return jsonify({"error": "No input data provided"}), 400
-
-    try:
-        # Validate input
-        features_list = data.get('features')
-        if not features_list or not isinstance(features_list, list):
-             return jsonify({"error": "Invalid input: 'features' must be a list"}), 400
-        
-        if len(features_list) != 22:
-             return jsonify({"error": f"Invalid input: Expected 22 features, got {len(features_list)}"}), 400
-
-        # Extract features from the request
-        features = np.array(features_list).reshape(1, -1)
-        # Make a prediction
-        prediction = model.predict(features)
-        return jsonify({"prediction": prediction.tolist()})
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+app = create_app()
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)  # Change to 5001 or any other available port
+    # Run with SocketIO for real-time features
+    socketio.run(app, debug=True, port=5001, allow_unsafe_werkzeug=True)
