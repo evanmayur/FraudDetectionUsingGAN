@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafePayAI - Hybrid ML Pipeline Flowchart (Print Version)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* =====================================================
+           PRINT-READY A4 PROFESSIONAL FLOWCHART
+           Black & White | Standard Flowchart Symbols
+           ===================================================== */
+
+        @page {
+            size: A4 portrait;
+            margin: 15mm;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #ffffff;
+            color: #000000;
+            font-size: 10pt;
+            line-height: 1.4;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm;
+            margin: 0 auto;
+            background: #fff;
+        }
+
+        @media print {
+            .page {
+                width: 100%;
+                min-height: auto;
+                padding: 0;
+                margin: 0;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 8mm;
+            padding-bottom: 5mm;
+            border-bottom: 2px solid #000;
+        }
+
+        .header h1 {
+            font-size: 18pt;
+            font-weight: 700;
+            margin-bottom: 2mm;
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            font-size: 10pt;
+            color: #333;
+        }
+
+        /* Main Flowchart Container */
+        .flowchart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6mm;
+        }
+
+        /* Stage Section */
+        .stage {
+            border: 1.5px solid #000;
+            padding: 4mm;
+            background: #fafafa;
+        }
+
+        .stage-header {
+            display: flex;
+            align-items: center;
+            gap: 3mm;
+            margin-bottom: 4mm;
+            padding-bottom: 2mm;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .stage-number {
+            width: 7mm;
+            height: 7mm;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            color: #fff;
+            font-weight: 700;
+            font-size: 10pt;
+        }
+
+        .stage-title {
+            font-size: 11pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Flow Items Container */
+        .flow-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3mm;
+        }
+
+        .flow-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5mm;
+            width: 100%;
+        }
+
+        /* =====================================================
+           STANDARD FLOWCHART SYMBOLS
+           ===================================================== */
+
+        /* Terminal (Start/End) - Rounded Rectangle */
+        .terminal {
+            padding: 3mm 8mm;
+            border: 1.5px solid #000;
+            border-radius: 20px;
+            text-align: center;
+            background: #fff;
+            font-weight: 500;
+        }
+
+        /* Process - Rectangle */
+        .process {
+            padding: 3mm 6mm;
+            border: 1.5px solid #000;
+            text-align: center;
+            background: #fff;
+            min-width: 35mm;
+        }
+
+        .process-title {
+            font-weight: 600;
+            font-size: 9pt;
+        }
+
+        .process-subtitle {
+            font-size: 7pt;
+            color: #555;
+            margin-top: 1mm;
+        }
+
+        /* Decision - Diamond */
+        .decision-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2mm 0;
+        }
+
+        .decision {
+            width: 28mm;
+            height: 28mm;
+            border: 1.5px solid #000;
+            transform: rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+        }
+
+        .decision-content {
+            transform: rotate(-45deg);
+            text-align: center;
+            font-size: 8pt;
+            font-weight: 500;
+            padding: 2mm;
+            line-height: 1.2;
+        }
+
+        /* Database Symbol - Cylinder */
+        .database {
+            width: 30mm;
+            text-align: center;
+            position: relative;
+        }
+
+        .database-body {
+            border: 1.5px solid #000;
+            border-top: none;
+            height: 12mm;
+            background: #fff;
+            border-radius: 0 0 3mm 3mm;
+        }
+
+        .database-top {
+            width: 100%;
+            height: 4mm;
+            border: 1.5px solid #000;
+            border-radius: 50%;
+            background: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .database-label {
+            font-size: 8pt;
+            margin-top: 1mm;
+        }
+
+        /* Predefined Process (ML Model) - Rectangle with side lines */
+        .predefined {
+            padding: 3mm 8mm;
+            border: 1.5px solid #000;
+            text-align: center;
+            background: #fff;
+            position: relative;
+            min-width: 40mm;
+        }
+
+        .predefined::before,
+        .predefined::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 3mm;
+            border-right: 1.5px solid #000;
+        }
+
+        .predefined::before {
+            left: 0;
+        }
+
+        .predefined::after {
+            right: 0;
+            border-right: none;
+            border-left: 1.5px solid #000;
+        }
+
+        /* Manual Operation - Trapezoid for rules */
+        .manual-op {
+            padding: 2mm 5mm;
+            border: 1.5px solid #000;
+            text-align: center;
+            background: #fff;
+            font-size: 8pt;
+            clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%);
+            min-width: 28mm;
+        }
+
+        /* =====================================================
+           ARROWS & CONNECTORS
+           ===================================================== */
+
+        .arrow-down {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 6mm;
+        }
+
+        .arrow-down::before {
+            content: '';
+            width: 1.5px;
+            height: 4mm;
+            background: #000;
+        }
+
+        .arrow-down::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 2mm solid transparent;
+            border-right: 2mm solid transparent;
+            border-top: 2.5mm solid #000;
+        }
+
+        .arrow-right {
+            display: flex;
+            align-items: center;
+            width: 8mm;
+        }
+
+        .arrow-right::before {
+            content: '';
+            width: 5mm;
+            height: 1.5px;
+            background: #000;
+        }
+
+        .arrow-right::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-top: 2mm solid transparent;
+            border-bottom: 2mm solid transparent;
+            border-left: 2.5mm solid #000;
+        }
+
+        /* Branch Labels */
+        .branch-label {
+            font-size: 7pt;
+            font-weight: 600;
+            padding: 1mm 2mm;
+            border: 1px solid #000;
+            background: #fff;
+            margin-bottom: 1mm;
+        }
+
+        /* =====================================================
+           LAYOUT HELPERS
+           ===================================================== */
+
+        .branch-container {
+            display: flex;
+            gap: 8mm;
+            justify-content: center;
+            margin-top: 2mm;
+        }
+
+        .branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2mm;
+            padding: 3mm;
+            border: 1px dashed #999;
+        }
+
+        .branch-fraud {
+            background: #f5f5f5;
+        }
+
+        .branch-safe {
+            background: #fff;
+        }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2mm;
+            margin: 2mm 0;
+        }
+
+        .rule-box {
+            padding: 2mm 3mm;
+            border: 1px solid #000;
+            font-size: 7pt;
+            text-align: center;
+            background: #fff;
+        }
+
+        /* Horizontal flow section */
+        .horizontal-flow {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 4mm;
+        }
+
+        .flow-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2mm;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 6mm;
+            padding-top: 3mm;
+            border-top: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            font-size: 8pt;
+            color: #666;
+        }
+
+        /* Legend */
+        .legend {
+            margin-top: 5mm;
+            padding: 3mm;
+            border: 1px solid #000;
+            background: #fafafa;
+        }
+
+        .legend-title {
+            font-weight: 600;
+            font-size: 9pt;
+            margin-bottom: 2mm;
+        }
+
+        .legend-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4mm;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 2mm;
+            font-size: 7pt;
+        }
+
+        .legend-symbol {
+            width: 8mm;
+            height: 5mm;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .legend-symbol.terminal {
+            border-radius: 10px;
+            width: 10mm;
+        }
+
+        .legend-symbol.diamond {
+            width: 6mm;
+            height: 6mm;
+            transform: rotate(45deg);
+        }
+
+        .legend-symbol.predefined {
+            position: relative;
+        }
+
+        .legend-symbol.predefined::before,
+        .legend-symbol.predefined::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 1.5mm;
+            border-right: 1px solid #000;
+        }
+
+        .legend-symbol.predefined::before {
+            left: 0;
+        }
+
+        .legend-symbol.predefined::after {
+            right: 0;
+            border-right: none;
+            border-left: 1px solid #000;
+        }
+
+        /* Print Button */
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background: #000;
+            color: #fff;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .print-btn:hover {
+            background: #333;
+        }
+
+        @media print {
+            .print-btn {
+                display: none;
+            }
+        }
+
+        /* Compact outcome section */
+        .outcome-wrapper {
+            display: flex;
+            gap: 6mm;
+            width: 100%;
+        }
+
+        .outcome-path {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2mm;
+            padding: 3mm;
+            border: 1.5px solid #000;
+        }
+
+        .outcome-path.fraud {
+            background: #f0f0f0;
+        }
+
+        .outcome-header {
+            font-weight: 700;
+            font-size: 9pt;
+            padding: 1mm 3mm;
+            border: 1.5px solid #000;
+            background: #fff;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="print-btn no-print" onclick="window.print()">📄 Export to PDF</button>
+
+    <div class="page">
+        <!-- Header -->
+        <header class="header">
+            <h1>SafePayAI — Hybrid ML Pipeline Flowchart</h1>
+            <p>Real-time Fraud Detection System · Technical Documentation</p>
+        </header>
+
+        <div class="flowchart-container">
+            <!-- STAGE 1: Transaction Initiation -->
+            <div class="stage">
+                <div class="stage-header">
+                    <div class="stage-number">1</div>
+                    <div class="stage-title">Transaction Initiation</div>
+                </div>
+                <div class="flow-content">
+                    <div class="terminal">START: User Sends Money Request</div>
+
+                    <div class="arrow-down"></div>
+
+                    <div class="decision-wrapper">
+                        <div class="decision">
+                            <div class="decision-content">Validate<br>Input?</div>
+                        </div>
+                    </div>
+
+                    <div class="branch-container">
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <span class="branch-label">NO (Invalid)</span>
+                            <div class="arrow-down" style="height: 4mm;"></div>
+                            <div class="terminal" style="border-style: dashed;">Return Error</div>
+                        </div>
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <span class="branch-label">YES (Valid)</span>
+                            <div class="arrow-down" style="height: 4mm;"></div>
+                            <div class="process">
+                                <div class="process-title">Create Transaction Record</div>
+                                <div class="process-subtitle">Status: PENDING</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STAGE 2: Feature Engineering -->
+            <div class="stage">
+                <div class="stage-header">
+                    <div class="stage-number">2</div>
+                    <div class="stage-title">Feature Engineering</div>
+                </div>
+                <div class="flow-content">
+                    <div class="flow-row">
+                        <div class="database">
+                            <div class="database-top"></div>
+                            <div class="database-body"></div>
+                            <div class="database-label">SQLite DB</div>
+                        </div>
+                        <div class="arrow-right"></div>
+                        <div class="process">
+                            <div class="process-title">Gather Dynamic Features</div>
+                            <div class="process-subtitle">Risk Profile, Trust Score, Flags</div>
+                        </div>
+                        <div class="arrow-right"></div>
+                        <div class="database">
+                            <div class="database-top"></div>
+                            <div class="database-body"></div>
+                            <div class="database-label">CSV Data</div>
+                        </div>
+                    </div>
+
+                    <div class="arrow-down"></div>
+
+                    <div class="process">
+                        <div class="process-title">Normalize Features</div>
+                        <div class="process-subtitle">MinMaxScaler → 0-1 Range</div>
+                    </div>
+
+                    <div class="arrow-down"></div>
+
+                    <div class="process" style="background: #f5f5f5;">
+                        <div class="process-title">22-Feature Vector Ready</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STAGE 3: Hybrid Fraud Detection -->
+            <div class="stage">
+                <div class="stage-header">
+                    <div class="stage-number">3</div>
+                    <div class="stage-title">Hybrid Fraud Detection</div>
+                </div>
+                <div class="flow-content">
+                    <div class="predefined">
+                        <div class="process-title">ML Model Prediction</div>
+                        <div class="process-subtitle">Random Forest Classifier</div>
+                    </div>
+
+                    <div class="arrow-down"></div>
+
+                    <div class="process" style="background: #f0f0f0;">
+                        <div class="process-title">Output: Fraud Probability (0.0 - 1.0)</div>
+                    </div>
+
+                    <div class="arrow-down"></div>
+
+                    <div class="process">
+                        <div class="process-title">Rule-Based Boosters</div>
+                    </div>
+
+                    <div class="rules-grid">
+                        <div class="rule-box">Is Blacklisted? → Force FRAUD</div>
+                        <div class="rule-box">Trust Score &lt; 15? → Force FRAUD</div>
+                        <div class="rule-box">Fraud Flags ≥ 3? → Force FRAUD</div>
+                        <div class="rule-box">Complaints ≥ 5? → Force FRAUD</div>
+                    </div>
+
+                    <div class="arrow-down"></div>
+
+                    <div class="decision-wrapper">
+                        <div class="decision">
+                            <div class="decision-content">Prob<br>&gt; 0.3?</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STAGE 4: Outcome -->
+            <div class="stage">
+                <div class="stage-header">
+                    <div class="stage-number">4</div>
+                    <div class="stage-title">Outcome</div>
+                </div>
+                <div class="flow-content">
+                    <div class="outcome-wrapper">
+                        <!-- Fraud Path -->
+                        <div class="outcome-path fraud">
+                            <div class="outcome-header">⚠ FRAUD DETECTED</div>
+                            <div class="arrow-down" style="height: 4mm;"></div>
+                            <div class="process">
+                                <div class="process-title">Block Transaction</div>
+                                <div class="process-subtitle">Status: BLOCKED</div>
+                            </div>
+                            <div class="arrow-down" style="height: 4mm;"></div>
+                            <div class="process">
+                                <div class="process-title">Create Fraud Alert</div>
+                                <div class="process-subtitle">Severity: HIGH</div>
+                            </div>
+                            <div class="arrow-down" style="height: 4mm;"></div>
+                            <div class="process">
+                                <div class="process-title">Notify Admin</div>
+                                <div class="process-subtitle">Via WebSocket</div>
+                            </div>
+                            <div class="arrow-down" style="height: 4mm;"></div>
+                            <div class="terminal">END: Transaction Rejected</div>
+                        </div>
+
+                        <!-- Safe Path -->
+                        <div class="outcome-path">
+                            <div class="outcome-header">✓ TRANSACTION SAFE</div>
+                            <div class="arrow-down" style="height: 4mm;"></div>
+                            <div class="process">
+                                <div class="process-title">Complete Transaction</div>
+                                <div class="process-subtitle">Status: COMPLETED</div>
+                            </div>
+                            <div class="arrow-down" style="height: 4mm;"></div>
+                            <div class="process">
+                                <div class="process-title">Update Balances</div>
+                                <div class="process-subtitle">Sender − | Receiver +</div>
+                            </div>
+                            <div class="arrow-down" style="height: 4mm;"></div>
+                            <div class="terminal">END: Transaction Successful</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-title">Symbol Legend</div>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <div class="legend-symbol terminal"></div>
+                    <span>Terminal (Start/End)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-symbol"></div>
+                    <span>Process</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-symbol diamond"></div>
+                    <span>Decision</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-symbol predefined"></div>
+                    <span>Predefined Process (ML)</span>
+                </div>
+                <div class="legend-item">
+                    <svg width="20" height="16" style="margin-right: 2mm;">
+                        <ellipse cx="10" cy="3" rx="9" ry="3" fill="none" stroke="#000" stroke-width="1" />
+                        <rect x="1" y="3" width="18" height="10" fill="none" stroke="#000" stroke-width="1" />
+                        <ellipse cx="10" cy="13" rx="9" ry="3" fill="none" stroke="#000" stroke-width="1" />
+                    </svg>
+                    <span>Database</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <span>SafePayAI v1.0 — Fraud Detection System</span>
+            <span>Document Generated: December 2025</span>
+        </div>
+    </div>
+
+    <script>
+        // Auto-trigger print dialog for PDF export
+        // Uncomment the line below if you want auto-print on load
+        // window.onload = () => window.print();
+    </script>
+</body>
+
+</html>
