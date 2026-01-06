@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafePayAI - Simple Flowchart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .export-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 14px 32px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .export-btn:active {
+            transform: translateY(0);
+        }
+
+        #flowchart-container {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .flow-node {
+            padding: 20px 40px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            min-width: 280px;
+        }
+
+        .flow-node:hover {
+            transform: scale(1.05);
+        }
+
+        .node-start {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50px;
+            font-size: 1.2rem;
+        }
+
+        .node-process {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .node-decision {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: #333;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            padding: 40px 60px;
+            font-weight: 700;
+        }
+
+        .node-safe {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+
+        .node-blocked {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            color: white;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: #667eea;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .split-container {
+            display: flex;
+            gap: 60px;
+            margin-top: 20px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .path {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+            max-width: 300px;
+        }
+
+        .path-label {
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .label-yes {
+            background: #38ef7d;
+            color: white;
+        }
+
+        .label-no {
+            background: #eb3349;
+            color: white;
+        }
+
+        .icon {
+            font-size: 1.5rem;
+            margin-right: 8px;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            text-align: center;
+            color: white;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .split-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            #flowchart-container {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>🛡️ SafePayAI</h1>
+        <p>How We Protect Your Money in Real-Time</p>
+    </div>
+
+    <button class="export-btn" onclick="exportFlowchart()">
+        <span>📥</span>
+        <span>Export as JPG</span>
+    </button>
+
+    <div id="flowchart-container">
+        <div class="flowchart">
+            <!-- Start -->
+            <div class="flow-node node-start">
+                <span class="icon">💸</span>
+                You Send Money
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <!-- AI Check -->
+            <div class="flow-node node-process">
+                <span class="icon">🤖</span>
+                AI Security Check
+                <div style="font-size: 0.85rem; font-weight: 400; margin-top: 8px; opacity: 0.9;">
+                    Analyzing: Who, Where, When & How Much
+                </div>
+            </div>
+
+            <div class="arrow">↓</div>
+
+            <!-- Decision -->
+            <div class="flow-node node-decision">
+                Is This Safe?
+            </div>
+
+            <!-- Split Paths -->
+            <div class="split-container">
+                <!-- Safe Path -->
+                <div class="path">
+                    <div class="path-label label-yes">✓ Safe</div>
+                    <div class="arrow" style="color: #38ef7d;">↓</div>
+                    <div class="flow-node node-safe">
+                        <span class="icon">✅</span>
+                        Transaction Approved
+                    </div>
+                    <div class="arrow" style="color: #38ef7d;">↓</div>
+                    <div class="flow-node node-safe" style="font-size: 1rem;">
+                        <span class="icon">💰</span>
+                        Money Sent Instantly
+                    </div>
+                </div>
+
+                <!-- Blocked Path -->
+                <div class="path">
+                    <div class="path-label label-no">⚠ Risky</div>
+                    <div class="arrow" style="color: #eb3349;">↓</div>
+                    <div class="flow-node node-blocked">
+                        <span class="icon">🛑</span>
+                        Transaction Blocked
+                    </div>
+                    <div class="arrow" style="color: #eb3349;">↓</div>
+                    <div class="flow-node node-blocked" style="font-size: 1rem;">
+                        <span class="icon">🔔</span>
+                        Alert Sent to You
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Powered by Advanced Machine Learning • Protecting millions of transactions daily
+    </div>
+
+    <script>
+        function exportFlowchart() {
+            const container = document.getElementById('flowchart-container');
+            const button = document.querySelector('.export-btn');
+
+            // Disable button and show loading state
+            button.disabled = true;
+            button.innerHTML = '<span>⏳</span><span>Exporting...</span>';
+
+            html2canvas(container, {
+                backgroundColor: '#ffffff',
+                scale: 2, // Higher quality
+                logging: false,
+                useCORS: true
+            }).then(canvas => {
+                // Convert canvas to blob
+                canvas.toBlob(function (blob) {
+                    // Create download link
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    const timestamp = new Date().toISOString().slice(0, 10);
+                    link.download = `SafePayAI_Flowchart_${timestamp}.jpg`;
+                    link.href = url;
+                    link.click();
+
+                    // Cleanup
+                    URL.revokeObjectURL(url);
+
+                    // Reset button
+                    button.disabled = false;
+                    button.innerHTML = '<span>✅</span><span>Downloaded!</span>';
+
+                    setTimeout(() => {
+                        button.innerHTML = '<span>📥</span><span>Export as JPG</span>';
+                    }, 2000);
+                }, 'image/jpeg', 0.95);
+            }).catch(error => {
+                console.error('Export failed:', error);
+                button.disabled = false;
+                button.innerHTML = '<span>❌</span><span>Export Failed</span>';
+
+                setTimeout(() => {
+                    button.innerHTML = '<span>📥</span><span>Export as JPG</span>';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+
+</html>
